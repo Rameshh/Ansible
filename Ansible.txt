@@ -1,0 +1,72 @@
+Ansible is an open source IT Cofiguration Management, Deployment and Orchestration tool.
+
+No other client software is installed on the node machines. 
+It uses SSH to connect to the nodes. 
+Ansible only needs to be installed on the control machine which can even be your laptop.
+
+* Ansible Terms:
+1. Controller Machine -> The machine where Ansible is installed, responsible for running the provisioning on the servers you are managing.
+2. Inventory -> An initialization file that contains information about the server you are managing.
+3. Playbook -> The entry point for Ansible provisioning, where the automation is defined through tasks using YAML format.
+4. Task -> A block that defines a single procedure to be executed, ex: Install a package.
+5. Module -> A module typically abstracts a system task, like dealing with packages or creating and changing files.
+6. Role -> A pre-defined way for organizing plybooks and other files in order to facilitate sharing and resuing portions of a provisioning.
+7. Play -> A provisioning executed from start to finish is called a play. In simple workds, execution of a playbook is called a play.
+8. Facts -> Global variables containing information about the system, like network interfaces or operating system.
+9. Handles -> Used to trigger service status changes, like restarting or stopping a service.
+
+* Advantages Of Using Ansible
+1. Simple -> Ansible uses a simple syntax written in YAML called playbooks.
+2. Agentless -> Finally, Ansible is completely agentless.
+3. Poweful & Flexible -> Ansible has powerful features that can enable you to model even the most complex IT workflows.
+4. Efficient -> No extra software on your servers means more resources for your application.
+
+* What Ansible Can Do?
+1. Provisioning
+2. Configuration Management
+3. Application Deployment
+4. Security and Compliance
+5. Orchestration
+
+* What is Ansible & its Architecture?
+* The Ansible Automation engine consists of:
+1. Inventories -> Ansible inventories are lists of hosts(nodes) along with their IP addresses, servers, databases etc.
+2. APIs -> APIs in Ansible are used as transport for Cloud services, public or private.
+3. Modules -> Modules are executed directly on remote hosts through playbooks.
+4. Plugins -> Plugins allows to execute Ansible tasks as a job build step.
+
+* Few more components in Ansible Architecture:
+1. Networking -> Ansible can also be used to automate different networks.
+2. Hosts -> The hosts in the Ansible architecture are just node systems which are getting automated by Ansible.
+3. Playbooks -> Playbooks are simple files written in YAML format which describes the tasks to be executed by Ansible.
+4. CMDB -> It is a repository that acts as a data warehouse for IT installations.
+5. Cloud -> It is a network of remote servers hosted on the Internet to store, manage, and process data, rather than a local server.
+
+* Ansible in DevOps
+Plan -> Code -> Continuous Integration -> Build -> Test -> Continuous Management -> Deploy -> Monitoring -> Plan
+
+* Install Ansible on CentOS
+1. Set EPEL(Extra Packages for Enterprise Linux) Repository
+   sudo rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+2. Install Ansible
+   yum install ansible -y
+3. ansible -version
+ 
+* Post Installation
+1. Generate SSH key on the Ansible Control Machine.
+   ssh-keygen
+2. ifconfig
+3. Copy public key of Ansible server to its nodes.
+   ssh-copy-id -i root@192.168.15.200(ip address of your node machine)
+4. Open the file and update the ip address of node machine
+   vim /etc/ansible/hosts
+5. Ping operation to test the connectivity using Ansible.
+   ansible -m ping 'test-servers'
+6. Check uptime of your node machines.
+   ansible -m command -a "uptime" 'test-servers'
+7. Check kernel version of your nodes.
+   ansible -m command -a "uname -r" 'test-servers'
+
+* Deploy Nginx Using Ansible
+1. ansible test-servers -m yum -a "name=nginx state=installed"
+2. ps waux | grep nginx
