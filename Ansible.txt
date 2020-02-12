@@ -70,3 +70,55 @@ Plan -> Code -> Continuous Integration -> Build -> Test -> Continuous Management
 * Deploy Nginx Using Ansible
 1. ansible test-servers -m yum -a "name=nginx state=installed"
 2. ps waux | grep nginx
+
+* Writing Ansible Playbooks
+1. Hosts and Users -> Which machines and remote user to complete the tasks.
+2. Variables -> Enable more flexibility in playbooks and roles.
+3. Tasks -> Allow you to break up bits of configuration policy into smalled files.
+   ex: Install <package_name>, update <software_name> etc.
+4. Handlers -> Are regular tasks in an Ansible playbook.
+
+* Ansible Modules
+1. Core Modules -> Core Ansible team maintains and will always ship with Ansible it self.
+   Recieve slightly higher priority for all requests than those in the "extras" repos.
+2. Extras Modules -> Currently shipped with Ansible, but might be shipped separately in the future.
+
+* Ansible Return Values
+1. changed: returns with a boolean value whenever the task makes any change.
+2. failed: returns a boolean value, if the task is failed.
+3. msg: it returns a string with a generic message relayed to the user.
+
+* Ansible Hands On
+1. Connect to your hosts using SSH.
+   ssh-keygen (generated a public SSH key)
+2. Copy the public SSH key on your hosts.
+   ssh-copy-id -i root@<IP address of your host>
+3. List the IP addresses of your hosts/nodes in your inventory.
+   vim /etc/ansible/hosts
+4. Let's ping to ensure a connection has been established.
+   ansible -m ping 'test-servers'
+5. Write a playbook to install Nginx on the host machine.
+   vim nginx.yml
+   --
+    hosts: test-server
+    sudo: yes
+    vars:
+      - server_port: 8080
+    
+    tasks:
+      - name: install nginx
+        yum: pkg=nginx state=installed
+
+      - name: server nginx config
+        template: src=../files/flask.conf dest=/etc/nginx/conf.d/
+        notify:
+        - restart nginx
+    
+    handlers:
+      - name: restart nginx
+        service: name=nginx state=restarted
+
+6. Now let's run this playbook.
+   ansible-playbook nginx.yaml
+7. Let's check if Nginx is installed on my host machine.
+   ps waux | grep nginx
