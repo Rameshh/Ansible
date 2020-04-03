@@ -46,8 +46,8 @@ Ansible only needs to be installed on the control machine which can even be your
 Plan -> Code -> Continuous Integration -> Build -> Test -> Continuous Management -> Deploy -> Monitoring -> Plan
 
 * Install Ansible on CentOS
-1. Set EPEL(Extra Packages for Enterprise Linux) Repository
-   sudo rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+#1. Set EPEL(Extra Packages for Enterprise Linux) Repository
+#   sudo rpm -ivh http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
 2. Install Ansible
    yum install ansible -y
 3. ansible -version
